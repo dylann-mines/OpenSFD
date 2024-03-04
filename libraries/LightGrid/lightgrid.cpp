@@ -10,7 +10,7 @@ CRGB leds[NUM_LEDS];
 int getIndexFromCoordinate(int x, int y);
 
 LightGrid::LightGrid() {
-  FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
+  FastLED.addLeds<WS2812, DATA_PIN, GRB>(leds, NUM_LEDS);
   FastLED.setBrightness(50);
 }
 
