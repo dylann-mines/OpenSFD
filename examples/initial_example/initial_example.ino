@@ -3,7 +3,7 @@
 
 LightGrid lg;
 
-const int FADE_LEN = 128;
+const int FADE_LEN = 64;
 int lastX[FADE_LEN+1] = {-1};
 int lastY[FADE_LEN+1] = {-1};
 
