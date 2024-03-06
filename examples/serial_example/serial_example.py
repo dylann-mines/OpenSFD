@@ -1,8 +1,12 @@
 import serial
 import time
 import random
+import os
 
 if __name__ == '__main__':
+    os.system("arduino-cli compile --fqbn arduino:avr:mega")
+    os.system("arduino-cli upload --fqbn arduino:avr:mega --port /dev/ttyACM0")
+
     ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
     ser.reset_input_buffer()
 
