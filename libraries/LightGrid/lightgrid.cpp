@@ -57,10 +57,6 @@ void LightGrid::drawRect(int length, int height, struct Point startPoint, CRGB c
   }
 }
 
-void LightGrid::drawLine(struct Point a, struct Point b, CRGB color) {
-  // TODO: Make this work :)
-}
-
 void LightGrid::clear() {
   for (int i = 0; i < NUM_LEDS; i++) {
     leds[i] = CRGB::Black;

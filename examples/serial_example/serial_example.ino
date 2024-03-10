@@ -13,10 +13,7 @@ void loop() {
 		char r = Serial.read();
 		char g = Serial.read();
     char b = Serial.read();
-    struct Point p;
-    p.x = 1;
-    p.y = 1; 
-    lg.drawPixel(p, CRGB(r, g, b));
+    lg.drawPixel((struct Point){1, 1}, CRGB(r, g, b));
 		lg.render();
   }
 }

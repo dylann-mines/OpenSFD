@@ -15,7 +15,6 @@ class LightGrid {
     void clearPixel(struct Point p);
     void drawRect(int length, int height, int startX, int startY, CRGB color);
     void drawRect(int length, int height, struct Point startPoint, CRGB color);
-    void drawLine(struct Point a, struct Point b, CRGB color);
     void clear();
     void render();
 };
