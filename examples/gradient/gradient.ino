@@ -25,26 +25,27 @@ void loop() {
 
     for(int y = 1; y<=8; y++) {
       lg.drawPixel(x, y, CRGB(0,255,0));
-    }
-    for(int i = 0; i < FADE_LEN; i++) {
-      if(lastX[i] >= 1) {
-        int bright = 255-(i*255/FADE_LEN);
-        lg.drawPixel(lastX[i], lastY[i], CRGB(0, bright, 255-bright));
+
+      for(int i = 0; i < FADE_LEN; i++) {
+        if(lastX[i] >= 1) {
+          int bright = 255-(i*255/FADE_LEN);
+          lg.drawPixel(lastX[i], lastY[i], CRGB(0, bright, 255-bright));
+        }
       }
+
+      lg.render();
+      // delay(100);
+
+      lg.drawPixel(lastX[FADE_LEN], lastY[FADE_LEN], CRGB(45,45,45));
+      //lg.clearPixel(lastX[FADE_LEN], lastY[FADE_LEN]);
+      for(int i = FADE_LEN; i > 0 ; i--) {
+        lastX[i] = lastX[i-1];
+        lastY[i] = lastY[i-1];
+      }
+      lastX[0] = x;
+      lastY[0] = y;
+
+      lg.render();
     }
-
-    lg.render();
-    // delay(100);
-
-    lg.drawPixel(lastX[FADE_LEN], lastY[FADE_LEN], CRGB(45,45,45));
-    //lg.clearPixel(lastX[FADE_LEN], lastY[FADE_LEN]);
-    for(int i = FADE_LEN; i > 0 ; i--) {
-      lastX[i] = lastX[i-1];
-      lastY[i] = lastY[i-1];
-    }
-    lastX[0] = x;
-    lastY[0] = y;
-
-    lg.render();
   }
 }
