@@ -1,4 +1,5 @@
 #include <lightgrid.h>
+#include <Point.h>
 
 LightGrid lg;
 
@@ -12,7 +13,7 @@ void loop() {
 		char r = Serial.read();
 		char g = Serial.read();
     char b = Serial.read();
-    lg.drawPixel(1, 1, CRGB(r, g, b));
+    lg.drawPixel((struct Point){1, 1}, CRGB(r, g, b));
 		lg.render();
   }
 }

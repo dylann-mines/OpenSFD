@@ -8,6 +8,7 @@
 CRGB leds[NUM_LEDS];
 
 int getIndexFromCoordinate(int x, int y);
+int getIndexFromCoordinate(Point p);
 
 LightGrid::LightGrid() {
   FastLED.addLeds<WS2812, DATA_PIN, GRB>(leds, NUM_LEDS);
@@ -28,8 +29,16 @@ void LightGrid::drawPixel(int x, int y, CRGB color) {
   leds[getIndexFromCoordinate(x, y)] = color;
 }
 
+void LightGrid::drawPixel(struct Point p, CRGB color) {
+  leds[getIndexFromCoordinate(p)] = color;
+}
+
 void LightGrid::clearPixel(int x, int y) {
   leds[getIndexFromCoordinate(x, y)] = CRGB::Black;
+}
+
+void LightGrid::clearPixel(struct Point p) {
+  leds[getIndexFromCoordinate(p.x, p.y)] = CRGB::Black;
 }
 
 void LightGrid::drawRect(int length, int height, int startX, int startY, CRGB color) {
@@ -40,63 +49,10 @@ void LightGrid::drawRect(int length, int height, int startX, int startY, CRGB co
   }
 }
 
-void LightGrid::drawLine(int startX, int startY, int endX, int endY, CRGB color) {
-  // Implement Bresenham's Line Algorithm
-  int deltaY = -(endY - startY);
-  int deltaX = endX - startX;
-  float slope = ((float)(deltaY))/(deltaX);
-
-  int a;
-  int b;
-  int p;
-
-  int currentPixelX = startX;
-  int currentPixelY = startY;
-
-  drawPixel(currentPixelX, currentPixelY, color);
-
-  if (abs(deltaY) > abs(deltaX)) {
-    a = 2 * (endX - currentPixelX);
-    b = a - (2 * -(endY - currentPixelY));
-    p = a + (endY - currentPixelY);
-
-    while (currentPixelY != endY) {
-      Serial.println(p);
-      if (p < 0) {
-        currentPixelY--;
-        drawPixel(currentPixelX, currentPixelY, color);
-        p += a;
-      } else {
-        if (slope < 0) {
-          currentPixelX++;
-        } else {
-          currentPixelX--;
-        }
-        currentPixelY++;
-        drawPixel(currentPixelX, currentPixelY, color);
-        p += b;
-      }
-    }
-  } else {
-    a = abs(2 * -(endY - currentPixelY));
-    b = a - (2 * (endX - currentPixelX));
-    p = a - (endX - currentPixelX);
-
-    while (currentPixelX != endX) {
-      if (p < 0) {
-        currentPixelX++;
-        drawPixel(currentPixelX, currentPixelY, color);
-        p += a;
-      } else {
-        if (slope < 0) {
-          currentPixelY++;
-        } else {
-          currentPixelY--;
-        }
-        currentPixelX++;
-        drawPixel(currentPixelX, currentPixelY, color);
-        p += b;
-      }
+void LightGrid::drawRect(int length, int height, struct Point startPoint, CRGB color) {
+  for (int i = startPoint.y; i < startPoint.y + length; i++) {
+    for (int j = startPoint.x; j < startPoint.x + height; j++) {
+      drawPixel(i, j, color);
     }
   }
 }
@@ -114,4 +70,9 @@ void LightGrid::render() {
 int getIndexFromCoordinate(int x, int y) {
   if (x % 2 == 0) return (((x - 1) * NUM_ROWS) + (NUM_ROWS - y));
   return (((x - 1) * NUM_ROWS) + (y - 1));
+}
+
+int getIndexFromCoordinate(struct Point p) {
+  if (p.x % 2 == 0) return (((p.x - 1) * NUM_ROWS) + (NUM_ROWS - p.y));
+  return (((p.x - 1) * NUM_ROWS) + (p.y - 1));
 }
