@@ -17,17 +17,28 @@ class DisplayChar {
 
     // Given x and y (upper left corner), draw the letter onto Lightgrid
     void draw_to_lightgrid(int x_prime, int y_prime, LightGrid lg) {
+      if(x_prime + 6 < 1 || x_prime >= 64) {
+        return;
+      }
+      
       for(int x = 1; x <= 5; x++) {
+        if(x + x_prime < 1 || x + x_prime > 64) {
+          continue;
+        }
         for(int y = 1; y <= 7; y++) {
-          if(x + x_prime < 1 || x + x_prime > 64) {
-            continue;
-          }
           if (arr[y-1][x-1]) {
             lg.drawPixel(x + x_prime, y + y_prime, CRGB(100,100,100));
           } else {
-            lg.drawPixel(x + x_prime, y + y_prime, CRGB(0,0,0));
+            lg.drawPixel(x + x_prime, y + y_prime, CRGB(0, 0, 0));
           }
         }
+      }
+
+      if(x_prime + 6 > 64) {
+          return;
+      }
+      for(int y = 1; y <= 8; y++) {
+        lg.drawPixel(x_prime + 6, y, CRGB(0, 0, 0));
       }
     }
 
